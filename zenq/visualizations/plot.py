@@ -43,7 +43,8 @@ class Visuals():
         self.session.close()
         df = pd.DataFrame(total_price, columns=['total_price'])
         fig = px.box(df, x='total_price')
-        fig.show()
+        # fig.show()
+        return fig
         
     def time_series(self):
         """
@@ -62,7 +63,8 @@ class Visuals():
         fig.add_trace(go.Scatter(x=[sale[0] for sale in daily_sales], y=[sale[1] for sale in daily_sales], mode='lines', line=dict(color='blue')))
         fig.update_layout(title='Daily Sales', yaxis_title='Total sales', xaxis=dict(showgrid=False, tickangle=45, tickfont=dict(size=12), tickmode='auto', title=''))
         fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
-        fig.show()
+        # fig.show()
+        return fig
 
 
     def gender_price(self):
@@ -79,7 +81,8 @@ class Visuals():
         df = pd.DataFrame(price_by_gender, columns=['gender', 'total_price'])
         fig = px.box(df, x='gender', y='total_price', title='Product price by gender')
         fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
-        fig.show()
+        # fig.show()
+        return fig
 
     def rfm_treemap(self):
         """ 
@@ -91,7 +94,8 @@ class Visuals():
         self.session.close()
         df_treemap = pd.DataFrame(rfm, columns=['segment', 'RFM_SCORE'])
         fig = px.treemap(df_treemap, path=['segment'], values='RFM_SCORE')
-        fig.show()
+        # fig.show()
+        return fig
         
     def top_customers_30days(self):
         """ 
@@ -116,7 +120,8 @@ class Visuals():
         xaxis_title="Customer",
         yaxis_title="Expected Number of Purchases"
         )
-        fig.show()
+        return fig
+        # fig.show()
         
             
     def top_customers_90days(self):
@@ -141,7 +146,8 @@ class Visuals():
         xaxis_title="Customer",
         yaxis_title="Expected Number of Purchases"
         )
-        fig.show()
+        return fig
+        # fig.show()
         
     def lowest_customers_90days(self):
         """ 
@@ -165,7 +171,8 @@ class Visuals():
         xaxis_title="Customer",
         yaxis_title="Expected Number of Purchases"
         )
-        fig.show()
+        return fig
+        # fig.show()
         
     def customer_aliveness(self):
         """ 
@@ -182,7 +189,8 @@ class Visuals():
             xaxis_title='Probability of Being Alive',
             yaxis_title='Number of Customers'
         )
-        fig.show()
+        return fig
+        # fig.show()
 
 
 

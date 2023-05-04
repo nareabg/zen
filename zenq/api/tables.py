@@ -43,7 +43,7 @@ class Facts(Base):
         metadata
         engine
         """
-        logger.info(f"{self.connect_to_db.__name__}/Connecting to the database.") 
+        # logger.info(f"{self.connect_to_db.__name__}/Connecting to the database.") 
         # Create a database engine
         engine = create_engine(db_uri)
         # Create a session factory for the engine

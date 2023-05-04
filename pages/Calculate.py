@@ -18,44 +18,25 @@ from flask import Flask
 
 
 from dash import callback,Input, Output, State, dcc, html
-from zenq.api.endpoints import insert_facts
-from zenq.api.tables import Facts
-from zenq.api.config import db_uri
+# from zenq.api.endpoints import insert_facts
+# from zenq.api.tables import Facts
+# from zenq.api.config import db_uri
 
 
 dash.register_page(
     __name__,
      path='/Calculate',
-    # title='Calculate',
-    # name='Calculate'
+    title='Calculate',
+    name='Calculate'
 )
 # app = dash.Dash(__name__ )
  
-engine = create_engine(db_uri)
-Session = sessionmaker(bind=engine)
-session = Session()
+# engine = create_engine(db_uri)
+# Session = sessionmaker(bind=engine)
+# session = Session()
  
-UPLOAD_DIRECTORY = os.path.join(os.getcwd(), 'tmp')
-
-if not os.path.exists(UPLOAD_DIRECTORY):
-    os.makedirs(UPLOAD_DIRECTORY)
-server = Flask(__name__)
-app = dash.Dash(server=server)
-@server.route("/download/<path:path>")
-def download(path):
-    """Serve a file from the upload directory.
-
-    Parameters
-    ----------
-    path :
-        
-
-    Returns
-    -------
-
-    """
-    return send_from_directory(UPLOAD_DIRECTORY, path, as_attachment=True)
-
+ 
+ 
 layout =  html.Div([
     html.Div([
         html.Div([
@@ -143,76 +124,76 @@ layout =  html.Div([
     ],className = 'pordz')
     ])
 
-def save_file(name, content):
-    """Decode and store a file uploaded with Plotly Dash.
+# def save_file(name, content):
+#     """Decode and store a file uploaded with Plotly Dash.
 
-    Parameters
-    ----------
-    name :
+#     Parameters
+#     ----------
+#     name :
         
-    content :
-        
-
-    Returns
-    -------
-
-    """
-    data = content.encode("utf8").split(b";base64,")[1]
-    with open(os.path.join(UPLOAD_DIRECTORY, name), "wb") as fp:
-        fp.write(base64.decodebytes(data))
-
-def uploaded_files():
-    """List the files in the upload directory."""
-    files = []
-    for filename in os.listdir(UPLOAD_DIRECTORY):
-        path = os.path.join(UPLOAD_DIRECTORY, filename)
-        if os.path.isfile(path):
-            files.append(filename)
-    return files
-
-def file_download_link(filename):
-    """Create a Plotly Dash 'A' element that downloads a file from the app.
-
-    Parameters
-    ----------
-    filename :
+#     content :
         
 
-    Returns
-    -------
+#     Returns
+#     -------
 
-    """
-    location = "/download/{}".format(urlquote(filename))
-    return html.A(filename, href=location)
+#     """
+#     data = content.encode("utf8").split(b";base64,")[1]
+#     with open(os.path.join(UPLOAD_DIRECTORY, name), "wb") as fp:
+#         fp.write(base64.decodebytes(data))
 
+# def uploaded_files():
+#     """List the files in the upload directory."""
+#     files = []
+#     for filename in os.listdir(UPLOAD_DIRECTORY):
+#         path = os.path.join(UPLOAD_DIRECTORY, filename)
+#         if os.path.isfile(path):
+#             files.append(filename)
+#     return files
 
-@app.callback(
-    Output("file-list", "children"),
-    [Input("upload_buttom", "filename"), Input("upload_buttom", "contents")])
-def update_output(uploaded_filenames, uploaded_file_contents):
-    """Save uploaded files and regenerate the file list.
+# def file_download_link(filename):
+#     """Create a Plotly Dash 'A' element that downloads a file from the app.
 
-    Parameters
-    ----------
-    uploaded_filenames :
+#     Parameters
+#     ----------
+#     filename :
         
-    uploaded_file_contents :
+
+#     Returns
+#     -------
+
+#     """
+#     location = "/download/{}".format(urlquote(filename))
+#     return html.A(filename, href=location)
+
+
+# @app.callback(
+#     Output("file-list", "children"),
+#     [Input("upload_buttom", "filename"), Input("upload_buttom", "contents")])
+# def update_output(uploaded_filenames, uploaded_file_contents):
+#     """Save uploaded files and regenerate the file list.
+
+#     Parameters
+#     ----------
+#     uploaded_filenames :
+        
+#     uploaded_file_contents :
         
 
-    Returns
-    -------
+#     Returns
+#     -------
 
-    """
+#     """
 
-    if uploaded_filenames is not None and uploaded_file_contents is not None:
-        for name, data in zip(uploaded_filenames, uploaded_file_contents):
-            save_file(name, data)
+#     if uploaded_filenames is not None and uploaded_file_contents is not None:
+#         for name, data in zip(uploaded_filenames, uploaded_file_contents):
+#             save_file(name, data)
 
-    files = uploaded_files()
-    if len(files) == 0:
-        return [html.Li("No files yet!")]
-    else:
-        return [html.Li(file_download_link(filename)) for filename in files]
+#     files = uploaded_files()
+#     if len(files) == 0:
+#         return [html.Li("No files yet!")]
+#     else:
+#         return [html.Li(file_download_link(filename)) for filename in files]
 
 if __name__ == "__main__":
     app.run_server(debug=True, port=8058)
