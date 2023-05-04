@@ -12,6 +12,7 @@ from zenq.logger import CustomFormatter, bcolors
 from zenq.datapreparation.preparation import data_prep
 from .tables import  Facts 
 from .config import db_uri
+ 
 
 # Set up logging 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s/ %(funcName)s/ %(msg)s/')

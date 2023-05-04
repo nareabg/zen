@@ -65,12 +65,15 @@ class Model():
         # one_time_buyers = round(sum(cltv_df['frequency'] == 0)/float(len(cltv_df))*(100),2)
         cltv = cltv[cltv["monetary"] > 0]
         cltv = cltv[cltv["frequency"] > 0]
-        cltv['T'] = cltv['T'].astype('timedelta64[D]').astype(float).map('{:.0f}'.format).astype(int)       
-        cltv['recency'] = cltv['recency'].astype('timedelta64[D]').astype(float).map('{:.0f}'.format).astype(int)       
+        cltv['T'] = cltv['T'].dt.days.astype(int)
+        cltv['recency']=cltv['recency'].dt.days.astype(int)
+        # cltv['recency'] = (cltv['T'] / np.timedelta64(1, 'D')).astype(int)
+        # cltv['T'] = cltv['T'].astype('timedelta64[D]').astype(float).map('{:.0f}'.format).astype(int)       
+        # cltv['recency'] = cltv['recency'].astype('timedelta64[D]').astype(float).map('{:.0f}'.format).astype(int)       
         cltv = cltv[cltv["recency"] > 0]
         cltv = cltv[cltv["T"] > 0]
         
-        # Write the cleaned data to a SQL table called CLTV
+        # # Write the cleaned data to a SQL table called CLTV
         cltv.to_sql('CLTV', self.engine, if_exists='replace', index=False, schema='result')
         logger.info(f"{self.cltv_df.__name__}/ {len(cltv)} rows written to CLTV table")
         return cltv

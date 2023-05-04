@@ -10,6 +10,9 @@ from lifetimes import GammaGammaFitter
 from sqlalchemy import Sequence, UniqueConstraint, create_engine, desc, asc
 from lifetimes.utils import calibration_and_holdout_data
 from zenq.visualizations.plot import Visuals
+from zenq.clvmodels.pareto import Model
+from zenq.api.prepare_db import db
+from zenq.api.endpoints import insert_facts
 import dash
 import base64
 from urllib.parse import quote as urlquote
@@ -52,50 +55,55 @@ layout =  html.Div([
                 placeholder='csv name(globbing.csv)',
             ),
             dcc.Input(
-                id='input1',
+                id='input2',
                 type='text',
                 placeholder='customer_id',
             ),
             
             # Second input field
             dcc.Input(
-                id='input2',
+                id='input3',
                 type='text',
                 placeholder='gender',
             ),
             
             # Third input field
             dcc.Input(
-                id='input3',
+                id='input4',
                 type='text',
                 placeholder='invoice_id',
             ),
             
             # Fourth input field
             dcc.Input(
-                id='input4',
+                id='input5',
                 type='text',
                 placeholder='date',
             ),
             
             # Fifth input field
             dcc.Input(
-                id='input5',
+                id='input6',
                 type='text',
                 placeholder='quantity',
             ),
             
             # Sixth input field
             dcc.Input(
-                id='input6',
+                id='input7',
                 type='text',
                 placeholder='total_price',
             ),],id = 'column_inputs'), 
-         
-            html.Div(
-            html.Button('Submit', id='submit_button',  n_clicks=0),
-            style={'textAlign': 'center' }  # Center the button
-        ), 
+        
+            html.Div([
+            html.Button(id='submit_button',  n_clicks=0,
+                children=html.Div(['Submit'], id = 'csv_text'),
+                ),        
+           html.Div(id="output"),]),
+        #     html.Div(
+        #     html.Button('Submit', id='submit_button',  n_clicks=0),
+        #     style={'textAlign': 'center' }  # Center the button
+        # ), 
          
         html.Div(id='output_div')
     ], className = 'black_box33'),
@@ -145,6 +153,32 @@ def upload_files(names, contents):
         # user has uploaded a single file
         save_file(names, contents)
         return f"{names} uploaded"
+
+@callback(
+    Output('output_div', 'children'),
+    Input('submit_button', 'n_clicks'),
+    State('input1', 'value'),
+    State('input2', 'value'),
+    State('input3', 'value'),
+    State('input4', 'value'),
+    State('input5', 'value'),
+    State('input6', 'value'),
+    State('input7', 'value')
+)
+def process_inputs(n_clicks, filename, customer_id, gender, invoice_id, date, quantity, total_price):
+    initialize=db()
+    initialize.main()
+    if n_clicks > 0:
+        insert_facts(filename, customer_id, gender, invoice_id, date, quantity, total_price)
+        model=Model()
+        model.cltv_df()
+        model.rfm_score()
+        model.fit_paretonbd()
+        model.model_params()
+        model.predict_paretonbd()
+        model.customer_is_alive()
+        return html.P("Data has been inserted into the database.")
+    
     
 if __name__ == "__main__":
     app.run_server(debug=True, port=8058)
