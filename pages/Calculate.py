@@ -12,6 +12,7 @@ from lifetimes.utils import calibration_and_holdout_data
 from zenq.visualizations.plot import Visuals
 import dash
 import base64
+from urllib.parse import quote as urlquote
 import io
 import os
 from flask import Flask
@@ -21,7 +22,7 @@ from dash import callback,Input, Output, State, dcc, html
 # from zenq.api.endpoints import insert_facts
 # from zenq.api.tables import Facts
 # from zenq.api.config import db_uri
-
+UPLOAD_DIRECTORY =  r"zenq/api"
 
 dash.register_page(
     __name__,
@@ -43,8 +44,7 @@ layout =  html.Div([
             dcc.Upload(id='upload_buttom',
                 children=html.Div(['Drag and Drop or ', html.A('Select Files')], id = 'csv_text'),
                 ),        
-            html.H2("File List"),
-        html.Ul(id="file-list"),]),
+           html.Div(id="output"),]),
         html.Div([    
             dcc.Input(
                 id='input1',
@@ -124,77 +124,28 @@ layout =  html.Div([
     ],className = 'pordz')
     ])
 
-# def save_file(name, content):
-#     """Decode and store a file uploaded with Plotly Dash.
+def save_file(name, content):
+    """Save a file uploaded with the dcc.Upload component."""
+    data = content.encode("utf8").split(b";base64,")[1]
+    with open(os.path.join(UPLOAD_DIRECTORY, name), "wb") as fp:
+        fp.write(base64.decodebytes(data))
 
-#     Parameters
-#     ----------
-#     name :
-        
-#     content :
-        
+@callback(
+    Output("output", "children"),
+    Input("upload_buttom", "filename"),
+    State("upload_buttom", "contents"),
+    prevent_initial_call=True,
+)
+def upload_files(names, contents):
+    """Save uploaded files and return a message to the user."""
+    if not os.path.exists(UPLOAD_DIRECTORY):
+        os.makedirs(UPLOAD_DIRECTORY)
 
-#     Returns
-#     -------
-
-#     """
-#     data = content.encode("utf8").split(b";base64,")[1]
-#     with open(os.path.join(UPLOAD_DIRECTORY, name), "wb") as fp:
-#         fp.write(base64.decodebytes(data))
-
-# def uploaded_files():
-#     """List the files in the upload directory."""
-#     files = []
-#     for filename in os.listdir(UPLOAD_DIRECTORY):
-#         path = os.path.join(UPLOAD_DIRECTORY, filename)
-#         if os.path.isfile(path):
-#             files.append(filename)
-#     return files
-
-# def file_download_link(filename):
-#     """Create a Plotly Dash 'A' element that downloads a file from the app.
-
-#     Parameters
-#     ----------
-#     filename :
-        
-
-#     Returns
-#     -------
-
-#     """
-#     location = "/download/{}".format(urlquote(filename))
-#     return html.A(filename, href=location)
-
-
-# @app.callback(
-#     Output("file-list", "children"),
-#     [Input("upload_buttom", "filename"), Input("upload_buttom", "contents")])
-# def update_output(uploaded_filenames, uploaded_file_contents):
-#     """Save uploaded files and regenerate the file list.
-
-#     Parameters
-#     ----------
-#     uploaded_filenames :
-        
-#     uploaded_file_contents :
-        
-
-#     Returns
-#     -------
-
-#     """
-
-#     if uploaded_filenames is not None and uploaded_file_contents is not None:
-#         for name, data in zip(uploaded_filenames, uploaded_file_contents):
-#             save_file(name, data)
-
-#     files = uploaded_files()
-#     if len(files) == 0:
-#         return [html.Li("No files yet!")]
-#     else:
-#         return [html.Li(file_download_link(filename)) for filename in files]
-
+    if isinstance(names, str):
+        # user has uploaded a single file
+        save_file(names, contents)
+        return f"{names} uploaded"
+    
 if __name__ == "__main__":
     app.run_server(debug=True, port=8058)
     
