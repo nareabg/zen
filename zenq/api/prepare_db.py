@@ -37,7 +37,7 @@ class db():
         """
             initializing the database, dropping and creating tables using metadata
         """
-        logger.info(f"{db.__name__}/Initializing the database...")
+        # logger.info(f"{db.__name__}/Initializing the database...")
         
         try:
             # Checking if the database already exists and creating a new one if it doesn't
@@ -50,7 +50,7 @@ class db():
         except Exception as e:
             logger.error(f"{db.__name__}/Error occurred while initializing the database: {e}")
             logger.debug(traceback.format_exc())        
-        logger.info(f"{db.__name__}/Insertion successfully done") 
+        # logger.info(f"{db.__name__}/Insertion successfully done") 
 
 if __name__ == "__main__":
     # Creating an instance of the db class and running its main method
