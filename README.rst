@@ -20,7 +20,7 @@ CLV package
 
 
 * Free software: MIT license
-* Documentation: https://zenq.readthedocs.io.
+
 
 Installation
 ============
