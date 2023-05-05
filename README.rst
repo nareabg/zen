@@ -42,22 +42,31 @@ Usage - Simple Example
 Once installed, you can use the library in your Python scripts as follows:
 
 .. code-block:: bash
+
     #run in terminal for postgres url creation
     docker run --name my-postgres-db -e POSTGRES_USER=master -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=GLOBBING -p 5432:5432 -d postgres
+
 .. code-block:: python   
+
     # Initialize database with tables
      from zenq.api.prepare_db import db
      m=db()
      m.main()
+
 .. code-block:: python
+
     # Insert data into database
     from zenq.api.endpoints import insert_facts
     insert_facts('globbing.csv', 'Customer', 'Gender', 'InvoiceId', 'Date', 'Product_weight', 'Product_price')
-.. code-block:: python    
+
+.. code-block:: python   
+         
     # Insert data of logging into LOGS table
     from zenq.api.endpoints import update_log
     update_log()
+
 .. code-block:: python
+
     #define model
      from zenq.clvmodels.pareto import Model
      model = Model()
@@ -65,7 +74,9 @@ Once installed, you can use the library in your Python scripts as follows:
      rfm = model.rfm_score()
      parameters = model.model_params()
      alive = model.customer_is_alive()
+
 .. code-block:: python
+
     #define Visualizations
     from zenq.visualizations.plot import Visuals
     gender_price = visuals.gender_price()
