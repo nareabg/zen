@@ -22,11 +22,54 @@ CLV package
 * Free software: MIT license
 * Documentation: https://zenq.readthedocs.io.
 
+Installation
+============
 
-Features
+To install Zenq CLV Models Library, simply run the following command:
+
+.. code-block:: bash
+
+    pip install zenq-clv-models
+
+The Story
 --------
+In order to provide marketing analysts and data scientists with a useful tool, the ZENQ package was developed. Because it is connected to a database, our product can be utilized by a wider variety of customers, including those who have a limited understanding of coding. Users are able to run scripts derived from the ZENQ package while the package works on data pertaining to customers. The data may be inserted into the database by users. It gives users the ability to study the behaviors of consumers based on how they engage with the company. Computations of CLV and RFM, in addition to forecasts, are the primary objective of the package. It features a Machine Learning component that makes an assumption as to whether the client will "die" or still be alive after a certain amount of time has passed. For the purpose of developing assumptions about the customers'  loyalness, ZENQ relies on the Pareto/NBD model. Because the package offers a number of different visualizations, it simplifies the process of comprehending the statistics and basing business decisions on those findings. 
 
-* TODO
+
+Usage - Simple Example
+=====
+
+Once installed, you can use the library in your Python scripts as follows:
+
+.. code-block:: python
+    #run in terminal for postgres url creation
+    docker run --name my-postgres-db -e POSTGRES_USER=master -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=GLOBBING -p 5432:5432 -d postgres
+   
+    # Initialize database with tables
+     from zenq.api.prepare_db import db
+     m=db()
+     m.main()
+
+    # Insert data into database
+    from zenq.api.endpoints import insert_facts
+    insert_facts('globbing.csv', 'Customer', 'Gender', 'InvoiceId', 'Date', 'Product_weight', 'Product_price')
+    
+    # Insert data of logging into LOGS table
+    from zenq.api.endpoints import update_log
+    update_log()
+
+    #define model
+     from zenq.clvmodels.pareto import Model
+     model = Model()
+     cltv = model.cltv_df()
+     rfm = model.rfm_score()
+     parameters = model.model_params()
+     alive = model.customer_is_alive()
+
+    #define Visualizations
+    from zenq.visualizations.plot import Visuals
+    gender_price = visuals.gender_price()
+
 
 Credits
 -------
