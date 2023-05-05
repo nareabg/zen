@@ -65,8 +65,20 @@ class Model():
         # one_time_buyers = round(sum(cltv_df['frequency'] == 0)/float(len(cltv_df))*(100),2)
         cltv = cltv[cltv["monetary"] > 0]
         cltv = cltv[cltv["frequency"] > 0]
+        # print(type(cltv['T']))
+        cltv['T'] = pd.to_timedelta(cltv['T'])
+
+        # extract the number of days as an integer
         cltv['T'] = cltv['T'].dt.days.astype(int)
-        cltv['recency']=cltv['recency'].dt.days.astype(int)
+        cltv['recency'] = pd.to_timedelta(cltv['recency'])
+
+        # extract the number of days as an integer
+        cltv['recency'] = cltv['recency'].dt.days.astype(int)        
+        # cltv['T'] =int(np.timedelta64(cltv['T'], 'D') / np.timedelta64(1, 'D'))
+        # cltv['recency'] =int(np.timedelta64(cltv['recency'], 'D') / np.timedelta64(1, 'D'))
+        
+        # int(cltv['T'].days)        
+        # cltv['recency']=cltv['recency'].dt.days.astype(int)
         # cltv['recency'] = (cltv['T'] / np.timedelta64(1, 'D')).astype(int)
         # cltv['T'] = cltv['T'].astype('timedelta64[D]').astype(float).map('{:.0f}'.format).astype(int)       
         # cltv['recency'] = cltv['recency'].astype('timedelta64[D]').astype(float).map('{:.0f}'.format).astype(int)       

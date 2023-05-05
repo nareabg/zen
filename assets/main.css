@@ -13,14 +13,31 @@
 } 
 
 #submit_button{
+position:relative;
 left: 820px;
+top: 0px;
+left: 40%;
+width: 296px;
+height: 41px;
+background: #1e5f1d;
 }
 #output-data-upload{
+  left: 40%;
   width: 96px;
   height: 21px;
   background: #1e5f1d;
   
 }
+#output{
+  position:relative;
+  width: 96px;
+  height: 21px;
+  color: #1e5f1d;
+  left: 40%;
+  top:-240px
+
+}
+ 
 #column_inputs{
 position: relative;
 padding-top: 40px;
@@ -623,20 +640,35 @@ font-size: 24px;
 line-height: 94px;
 text-align: center;
 
-color: #4c177c;
+color: #ffffff;
 }
 
+#csv_text_1{
+  position: relative;
 
+width: 934px;
+height: 67px;
+left: -340px;
+top: -25px;
+
+font-family: 'Hanuman';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 94px;
+text-align: center;
+
+color: #ffffff;
+}
 #upload_buttom{
   position: relative;
   
   width: 400px;
   height: 86px;
-  left: 525px;
+  left: 10%;
   top: 20px;
   
-  background: #FFFFFF;
-  border-radius: 30px;
+  background: #410d5e; 
   }
 
 

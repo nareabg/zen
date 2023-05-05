@@ -46,7 +46,7 @@ class db():
             # Dropping and creating tables using metadata    
             metadata.drop_all(bind=engine)
             metadata.create_all(bind=engine)
-            logger.info(f"{db.__name__}/Database successfully initialized")
+            # logger.info(f"{db.__name__}/Database successfully initialized")
         except Exception as e:
             logger.error(f"{db.__name__}/Error occurred while initializing the database: {e}")
             logger.debug(traceback.format_exc())        

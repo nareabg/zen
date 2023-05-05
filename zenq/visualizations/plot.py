@@ -43,6 +43,8 @@ class Visuals():
         self.session.close()
         df = pd.DataFrame(total_price, columns=['total_price'])
         fig = px.box(df, x='total_price')
+        fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+
         # fig.show()
         return fig
         
@@ -94,6 +96,8 @@ class Visuals():
         self.session.close()
         df_treemap = pd.DataFrame(rfm, columns=['segment', 'RFM_SCORE'])
         fig = px.treemap(df_treemap, path=['segment'], values='RFM_SCORE')
+        fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+
         # fig.show()
         return fig
         
@@ -120,6 +124,7 @@ class Visuals():
         xaxis_title="Customer",
         yaxis_title="Expected Number of Purchases"
         )
+        fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
         return fig
         # fig.show()
         
@@ -146,6 +151,7 @@ class Visuals():
         xaxis_title="Customer",
         yaxis_title="Expected Number of Purchases"
         )
+        fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
         return fig
         # fig.show()
         
@@ -171,6 +177,7 @@ class Visuals():
         xaxis_title="Customer",
         yaxis_title="Expected Number of Purchases"
         )
+        fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
         return fig
         # fig.show()
         
@@ -189,6 +196,7 @@ class Visuals():
             xaxis_title='Probability of Being Alive',
             yaxis_title='Number of Customers'
         )
+        fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
         return fig
         # fig.show()
 
