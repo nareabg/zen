@@ -73,7 +73,7 @@ class Facts(Base):
 
     id = Column(Integer, primary_key=True)
     customer_id = Column(String(50), nullable=False)
-    gender = Column(String(10))
+    gender = Column(String(10), nullable=False)
     invoice_id = Column(String(50),unique= True, nullable=False)
     date = Column(DateTime, nullable=False)
     quantity = Column(Float, nullable=False)

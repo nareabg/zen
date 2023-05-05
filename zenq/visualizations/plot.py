@@ -43,7 +43,7 @@ class Visuals():
         self.session.close()
         df = pd.DataFrame(total_price, columns=['total_price'])
         fig = px.box(df, x='total_price')
-        fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+        fig.update_layout(title = 'Price distribution', plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
 
         # fig.show()
         return fig
@@ -199,6 +199,6 @@ class Visuals():
         fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
         return fig
         # fig.show()
-
+        
 
 
