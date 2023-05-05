@@ -15,8 +15,8 @@ requirements = ['Click>=7.0', ]
 test_requirements = ['pytest>=3', ]
 
 setup(
-    author="Nare Abgaryan",
-    author_email='nareabgaryan2001@gmail.com',
+    author=["Nare Abgaryan","Lusine Babayan", "Armine Khachatryan"],
+    author_email=['nareabgaryan2001@gmail.com','babayanl169@gmail.com', 'armine_khachatryan@edu.aua.am'],
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -28,7 +28,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="CLV package",
+    description="Customer Analytics Package",
     entry_points={
         'console_scripts': [
             'zenq=zenq.cli:main',
