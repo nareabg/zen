@@ -32,12 +32,12 @@ To install Zenq CLV Models Library, simply run the following command:
     pip install zenq-clv-models
 
 The Story
---------
+=========
 In order to provide marketing analysts and data scientists with a useful tool, the ZENQ package was developed. Because it is connected to a database, our product can be utilized by a wider variety of customers, including those who have a limited understanding of coding. Users are able to run scripts derived from the ZENQ package while the package works on data pertaining to customers. The data may be inserted into the database by users. It gives users the ability to study the behaviors of consumers based on how they engage with the company. Computations of CLV and RFM, in addition to forecasts, are the primary objective of the package. It features a Machine Learning component that makes an assumption as to whether the client will "die" or still be alive after a certain amount of time has passed. For the purpose of developing assumptions about the customers'  loyalness, ZENQ relies on the Pareto/NBD model. Because the package offers a number of different visualizations, it simplifies the process of comprehending the statistics and basing business decisions on those findings. 
 
 
 Usage - Simple Example
-=====
+======================
 
 Once installed, you can use the library in your Python scripts as follows:
 
@@ -83,7 +83,7 @@ Once installed, you can use the library in your Python scripts as follows:
 
 
 Credits
--------
+=========
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 

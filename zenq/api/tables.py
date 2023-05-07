@@ -16,7 +16,7 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)
 ch.setFormatter(CustomFormatter())
 
-file_handler = logging.FileHandler('../zenq/api/logs.log')
+file_handler = logging.FileHandler('zenq/api/logs.log')
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(CustomFormatter())
 
